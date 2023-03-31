@@ -8,6 +8,7 @@ public class Email {
     public Email(String emailId){
         this.emailId = emailId;
         this.password = "Accio@123";
+        MailRepository mailRepository= new MailRepository();
     }
 
     public String getEmailId() {
@@ -25,5 +26,28 @@ public class Email {
         // 3. It contains at least one lowercase letter
         // 4. It contains at least one digit
         // 5. It contains at least one special character. Any character apart from alphabets and digits is a special character
+
+        if (oldPassword.compareTo(password)==0){
+            if(validatePassword(newPassword)) password = newPassword;
+        }
+    }
+    public boolean validatePassword(String passWord){
+        if(passWord.length()<8) return false;
+
+        boolean UC = false;
+        boolean LC = false;
+        boolean digit = false;
+        boolean SC = false;
+
+        for(int i =0;i<passWord.length();i++){
+            int ch = (int) passWord.charAt(i);
+
+            if(ch>=(int)'a' && ch<=(int)'z') LC = true;
+            else if(ch>=(int)'A' && ch<=(int)'Z') UC = true;
+            else if(ch>=(int)'0' && ch<=(int)'9') digit = true;
+            else SC = true;
+        }
+
+        return (UC && LC && digit && SC);
     }
 }
